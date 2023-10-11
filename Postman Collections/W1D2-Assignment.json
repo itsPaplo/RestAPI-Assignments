@@ -1,0 +1,296 @@
+{
+	"info": {
+		"_postman_id": "45d612fe-eca0-459f-bb61-dcdd19223890",
+		"name": "ServiceNow-ChangeRequest",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create CR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef9f5434-834a-45d7-b20c-1cb44bb02724",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"incident description\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 3000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"});\r",
+							"\r",
+							"var resp = pm.response.json();\r",
+							"var sys_id = resp.result.sys_id;\r",
+							"\r",
+							"pm.globals.set(\"System_ID_CR\", sys_id);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "be948bf9-e45a-4ed5-b519-a6dec8c48c40",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"short_description\": \"incident description\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://dev170251.service-now.com/api/now/table/change_request"
+			},
+			"response": []
+		},
+		{
+			"name": "Get a CR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cd101c60-c86a-4111-a849-e51872ddfcdc",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches short description\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"incident description\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 3000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "812758bc-bec5-4549-b321-576dc3857677",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dev170251.service-now.com/api/now/table/change_request/{{System_ID_CR}}?sysparm_fields=short_description,sys_id",
+					"protocol": "https",
+					"host": [
+						"dev170251",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"change_request",
+						"{{System_ID_CR}}"
+					],
+					"query": [
+						{
+							"key": "sysparm_fields",
+							"value": "short_description,sys_id",
+							"type": "text"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all CR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "dcb7290d-4e9d-4726-be0e-0b4798cb380c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 3000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "4984f92e-1f12-4849-b478-74dc691ac0e2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://dev170251.service-now.com/api/now/table/change_request?sysparm_fields=short_description,sys_id&sysparm_limit=10",
+					"protocol": "https",
+					"host": [
+						"dev170251",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"change_request"
+					],
+					"query": [
+						{
+							"key": "sysparm_fields",
+							"value": "short_description,sys_id"
+						},
+						{
+							"key": "sysparm_limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update CR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cbdfc91c-7807-486d-9636-57d50b569440",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches short description\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Updating incident description\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 3000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "0979bdb2-854b-427b-a537-0c2ed74a3a83",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"short_description\": \"Updating incident description\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://dev170251.service-now.com/api/now/table/change_request/{{System_ID_CR}}?sysparm_fields=short_description,sys_id",
+					"protocol": "https",
+					"host": [
+						"dev170251",
+						"service-now",
+						"com"
+					],
+					"path": [
+						"api",
+						"now",
+						"table",
+						"change_request",
+						"{{System_ID_CR}}"
+					],
+					"query": [
+						{
+							"key": "sysparm_fields",
+							"value": "short_description,sys_id"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete CR",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6d9ca9a5-1b6d-43c4-b4b6-101abc3f757b",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 3000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"id": "fbf4edf9-e44a-49af-bd06-492979c9dae7",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": "https://dev170251.service-now.com/api/now/table/change_request/{{System_ID_CR}}"
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": {
+			"password": "Ts5gNdF4Hn!/",
+			"username": "admin"
+		}
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "3895bca4-9090-4d24-8ad4-0f36aa5a6975",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "970503e2-ff99-44e2-a663-6b590451136f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
