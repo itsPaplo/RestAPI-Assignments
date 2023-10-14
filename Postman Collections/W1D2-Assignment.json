@@ -50,7 +50,7 @@
 						}
 					}
 				},
-				"url": "({{url}}/api/now/table/change_request"
+				"url": "https://dev170251.service-now.com/api/now/table/change_request"
 			},
 			"response": []
 		},
